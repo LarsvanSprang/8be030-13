@@ -12,8 +12,8 @@ def intensity_based_registration_rigid(s1, s2):
 
     # read the fixed and moving images
     # change these in order to read different images
-    I = plt.imread(f'../8be030-13/image_data/{s1}.tif')
-    Im = plt.imread(f'../8be030-13/image_data/{s2}.tif')
+    I = plt.imread(f'../data/image_data/{s1}.tif')
+    Im = plt.imread(f'../data/image_data/{s2}.tif')
 
     # initial values for the parameters
     # we start with the identity transformation
