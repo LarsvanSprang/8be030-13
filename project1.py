@@ -245,5 +245,16 @@ def intensity_based_registration_affine_mi(s1, s2):
     plt.close(fig)
 
         
-        
-  
+def gauss_noise_gen(mean, std_dev, image):
+    # image = np.zeros((200, 200))
+    # mean = 0
+    # std_dev = 0.1
+    gaussian_noise = np.random.normal(mean, std_dev, image.shape)
+
+    noisy_image = image + gaussian_noise
+    noisy_image = np.clip(noisy_image, 0, 1)
+
+    plt.imshow(noisy_image, cmap='gray')
+    plt.title("Gaussian Noise")
+    plt.colorbar()
+    plt.show()
