@@ -100,7 +100,7 @@ def cpselect(imagePath1, imagePath2):
 	axes[1].set_title("Image 2")
 	
 	#accumulate points
-	points = plt.ginput(n=-1, timeout=120)
+	points = plt.ginput(n=-1, timeout=0)
 	plt.close(fig)
 	
 	#restore to inline figure placement
