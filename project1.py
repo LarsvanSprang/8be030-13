@@ -251,10 +251,7 @@ def gauss_noise_gen(mean, std_dev, image):
     # std_dev = 0.1
     gaussian_noise = np.random.normal(mean, std_dev, image.shape)
 
-    noisy_image = image + gaussian_noise
-    noisy_image = np.clip(noisy_image, 0, 1)
+    noise_im = image + gaussian_noise
+    noise_im = np.clip(noisy_image, 0, 1)
 
-    plt.imshow(noisy_image, cmap='gray')
-    plt.title("Gaussian Noise")
-    plt.colorbar()
-    plt.show()
+    return noise_im
