@@ -1,7 +1,7 @@
 import sys
 from IPython.display import display, clear_output
 
-sys.path.append('../code')  # go up one folder, then into code
+sys.path.append('code')  # into code
 
 import registration_util as util
 import registration as reg
