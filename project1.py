@@ -7,6 +7,7 @@ import registration_util as util
 import registration as reg
 import matplotlib.pyplot as plt
 import numpy as np
+from skimage import io, transform
 
 def intensity_based_registration_rigid(s1, s2):
 
@@ -245,14 +246,12 @@ def intensity_based_registration_affine_mi(s1, s2):
     plt.close(fig)
 
         
-def gauss_noise_gen(mean, std_dev, image):
-    # image = np.zeros((200, 200))
-    # mean = 0
-    # std_dev = 0.1
-    image_blank = np.zeros_like(image)
-    gaussian_noise = np.random.normal(mean, std_dev, image_blank.shape)
-
-    noise_im = image_blank + gaussian_noise
-    noise_im = np.clip(noise_im, 0, 1)
-
-    return noise_im
+def downsampler(steps, end, tIm):
+    stack = []
+    for i in range(steps):
+        res = end-i*(end/steps)
+        downsampled = transform.resize(tIm, (tIm.shape[0] // res, tIm.shape[1] // res), anti_aliasing=True)
+        stack.append(downsampled)
+    stack.append(tIm)
+    
+    return stack
