@@ -249,9 +249,11 @@ def gauss_noise_gen(mean, std_dev, image):
     # image = np.zeros((200, 200))
     # mean = 0
     # std_dev = 0.1
-    gaussian_noise = np.random.normal(mean, std_dev, image.shape)
+    image_blank = np.zeros_like(image)
+    gaussian_noise = np.random.normal(mean, std_dev, image_blank.shape)
 
-    noise_im = image + gaussian_noise
-    noise_im = np.clip(noise_im, 0, 1)
+    noise_im = image_blank + gaussian_noise
+    noise_im = np.clip(noise_im, 0, 30)
 
+    noise_im += image
     return noise_im
