@@ -307,8 +307,8 @@ def intensity_based_registration_affine_th(I, Im):
     ax2.set_xlabel('Iteration')
     ax2.set_ylabel('Similarity')
     ax2.grid()
-    log = ""
 
+    smax = 0
     # perform 'num_iter' gradient ascent updates
     for k in np.arange(num_iter):
 
@@ -329,8 +329,9 @@ def intensity_based_registration_affine_th(I, Im):
         similarity[k] = S
         learning_curve.set_ydata(similarity)
         if (not np.isnan(S)):
-            log = S
-            Th_last = Th
+            if S > smax: 
+                smax = S
+                thbest = Th
         else:
             break
 
@@ -339,6 +340,4 @@ def intensity_based_registration_affine_th(I, Im):
     key = uuid.uuid4().hex[:4]  # 8-character random key
     fig.savefig(f'output/result_{key}.png')
     plt.close(fig)
-    print(log)
-    print(Th_last)
-    return Th_last
+    return thbest
