@@ -6,6 +6,8 @@ sys.path.append('code')  # into code
 import registration_util as util
 import registration as reg
 import matplotlib.pyplot as plt
+from skimage import io, transform
+
 import numpy as np
 import uuid
 
