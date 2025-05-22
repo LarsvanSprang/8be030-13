@@ -132,10 +132,10 @@ def intensity_based_registration_affine(s1, s2):
     # moving image
     im2 = ax1.imshow(I, alpha=0.7)
     # parameters
-    txt = ax1.text(0.3, 0.95,
-        np.array2string(x, precision=5, floatmode='fixed'),
-        bbox={'facecolor': 'white', 'alpha': 1, 'pad': 10},
-        transform=ax1.transAxes)
+    #txt = ax1.text(0.3, 0.95,
+    #    np.array2string(x, precision=5, floatmode='fixed'),
+    #    bbox={'facecolor': 'white', 'alpha': 1, 'pad': 10},
+    #    transform=ax1.transAxes)
 
     # 'learning' curve
     ax2 = fig.add_subplot(122, xlim=(0, num_iter), ylim=(0, 1))
@@ -159,7 +159,7 @@ def intensity_based_registration_affine(s1, s2):
 
         # update moving image and parameters
         im2.set_data(Im_t)
-        txt.set_text(np.array2string(x, precision=5, floatmode='fixed'))
+        #txt.set_text(np.array2string(x, precision=5, floatmode='fixed'))
 
         # update 'learning' curve
         similarity[k] = S
@@ -168,6 +168,7 @@ def intensity_based_registration_affine(s1, s2):
         display(fig)
 
     print(learning_curve)
+    fig.suptitle(f'Affine registration of {s1}', fontsize=16)
     plt.close(fig)
 
     return learning_curve
@@ -270,10 +271,10 @@ def intensity_based_registration_affine_th(I, Im, iter):
     # moving image
     im2 = ax1.imshow(I, alpha=0.7)
     # parameters
-    txt = ax1.text(0.3, 0.95,
-        np.array2string(x, precision=5, floatmode='fixed'),
-        bbox={'facecolor': 'white', 'alpha': 1, 'pad': 10},
-        transform=ax1.transAxes)
+    #txt = ax1.text(0.3, 0.95,
+    #    np.array2string(x, precision=5, floatmode='fixed'),
+    #    bbox={'facecolor': 'white', 'alpha': 1, 'pad': 10},
+    #    transform=ax1.transAxes)
 
     # 'learning' curve
     ax2 = fig.add_subplot(122, xlim=(0, num_iter), ylim=(0, 1))
@@ -298,7 +299,7 @@ def intensity_based_registration_affine_th(I, Im, iter):
 
         # update moving image and parameters
         im2.set_data(Im_t)
-        txt.set_text(np.array2string(x, precision=5, floatmode='fixed'))
+        #txt.set_text(np.array2string(x, precision=5, floatmode='fixed'))
 
         # update 'learning' curve
         similarity[k] = S
