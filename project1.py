@@ -170,6 +170,8 @@ def intensity_based_registration_affine(s1, s2):
     print(learning_curve)
     plt.close(fig)
 
+    return learning_curve
+
         
 def intensity_based_registration_affine_mi(s1, s2):
 
@@ -330,4 +332,4 @@ def intensity_based_registration_affine_th(I, Im):
     key = uuid.uuid4().hex[:4]  # 8-character random key
     fig.savefig(f'output/result_{key}.png')
     plt.close(fig)
-    return thbest
+    return thbest, learning_curve
