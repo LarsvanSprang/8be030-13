@@ -7,7 +7,6 @@ import registration_util as util
 import registration as reg
 import matplotlib.pyplot as plt
 import numpy as np
-from skimage import io, transform
 import uuid
 
 
