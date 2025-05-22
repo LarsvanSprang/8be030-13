@@ -242,9 +242,11 @@ def downsampler(steps, inc, tIm):
     for i in range(steps):
         res = (i+1)*inc
         t = reg.scale(1/res,1/res)
+        tinv = reg.scale(res,res)
         xy = tIm.shape[0]/res
         downsampled = reg.image_transform(tIm, util.t2h(t, [0, 0]))[0]
-        stack.append(downsampled[0:int(xy), 0:int(xy)])
+        upsampled = reg.image_transform(downsampled, util.t2h(tinv, [0, 0]))[0]
+        stack.append(upsampled)
     
     stack = stack[::-1]
     return stack
