@@ -166,6 +166,8 @@ def intensity_based_registration_affine(s1, s2):
         learning_curve.set_ydata(similarity)
 
         display(fig)
+
+    print(learning_curve)
     plt.close(fig)
 
         
