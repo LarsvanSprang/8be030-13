@@ -251,38 +251,26 @@ def intensity_based_registration_affine_mi(s1, s2):
     plt.close(fig)
 
         
-def downsampler(steps, end, tIm):
+def downsampler(steps, inc, tIm):
 
     stack = []
-    for i in range(steps):
-        res = end-i*(end/steps)
-        downsampled = ndimage.zoom(tIm, 1/res)
-        stack.append(downsampled)
     stack.append(tIm)
+
+    for i in range(steps):
+        res = (i+1)*inc
+        t = reg.scale(1/res,1/res)
+        xy = tIm.shape[0]/res
+        downsampled = reg.image_transform(tIm, util.t2h(t, [0, 0]))[0]
+        stack.append(downsampled[0:int(xy), 0:int(xy)])
     
+    stack = stack[::-1]
     return stack
 
 def intensity_based_registration_affine_th(I, Im):
-    # initial values for the parameters
-    # we start with the identity transformation
-    # most likely you will not have to change these
     x = np.array([0., 1. ,1. ,0.,0.,0.,0.])
-
-    # NOTE: for affine registration you have to initialize
-    # more parameters and the scaling parameters should be
-    # initialized to 1 instead of 0
-
-    # the similarity function
-    # this line of code in essence creates a version of rigid_corr()
-    # in which the first two input parameters (fixed and moving image)
-    # are fixed and the only remaining parameter is the vector x with the
-    # parameters of the transformation
     fun = lambda x: reg.affine_corr(I, Im, x, return_transform=False)
 
-    # the learning rate
     mu = 0.001
-
-    # number of iterations
     num_iter = 200
 
     iterations = np.arange(1, num_iter+1)
