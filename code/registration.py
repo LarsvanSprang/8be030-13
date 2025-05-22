@@ -233,43 +233,25 @@ def joint_histogram(I, J, num_bins=16, minmax_range=None):
     if I.shape != J.shape:
         raise AssertionError("The inputs must be the same size.")
 
-    # make sure the inputs are column-vectors of type double (highest
-    # precision)
-    I = I.reshape((I.shape[0]*I.shape[1],1)).astype(float)
-    J = J.reshape((J.shape[0]*J.shape[1],1)).astype(float)
+    # make sure the inputs are column-vectors of type double (highest precision)
+    I = I.reshape((I.shape[0]*I.shape[1],)).astype(float)
+    J = J.reshape((J.shape[0]*J.shape[1],)).astype(float)
 
-    # if the range is not specified use the min and max values of the
-    # inputs
+    # if the range is not specified use the min and max values of the inputs
     if minmax_range is None:
-        minmax_range = np.array([min(min(I),min(J)), max(max(I),max(J))])
+        minmax_range = np.array([min(np.min(I), np.min(J)), max(np.max(I), np.max(J))])
 
-    # this will normalize the inputs to the [0 1] range
-    I = (I-minmax_range[0]) / (minmax_range[1]-minmax_range[0])
-    J = (J-minmax_range[0]) / (minmax_range[1]-minmax_range[0])
+    # normalize the inputs to the [0, 1] range
+    I_norm = (I - minmax_range[0]) / (minmax_range[1] - minmax_range[0])
+    J_norm = (J - minmax_range[0]) / (minmax_range[1] - minmax_range[0])
 
-    # and this will make them integers in the [0 (num_bins-1)] range
-    I = np.round(I*(num_bins-1)).astype(int)
-    J = np.round(J*(num_bins-1)).astype(int)
+    # compute the joint histogram using numpy's histogram2d
+    p, _, _ = np.histogram2d(I_norm, J_norm, bins=num_bins, range=[[0, 1], [0, 1]])
 
-    n = I.shape[0]
-    hist_size = np.array([num_bins,num_bins])
-
-    # initialize the joint histogram to all zeros
-    p = np.zeros(hist_size)
-
-    for k in range(n):
-        p[I[k], J[k]] = p[I[k], J[k]] + 1
-
-    #------------------------------------------------------------------#
-    # TODO: At this point, p contains the counts of cooccuring
-    # intensities in the two images. You need to implement one final
-    # step to make p take the form of a probability mass function
-    # (p.m.f.).
-    p = p / n
-    #------------------------------------------------------------------#
+    # normalize to get a probability mass function
+    p = p / np.sum(p)
 
     return p
-
 
 def mutual_information(p):
     # Compute the mutual information from a joint histogram.
