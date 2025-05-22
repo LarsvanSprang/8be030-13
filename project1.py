@@ -6,7 +6,7 @@ sys.path.append('code')  # into code
 import registration_util as util
 import registration as reg
 import matplotlib.pyplot as plt
-from skimage import io, transform
+from scipy import ndimage
 
 import numpy as np
 import uuid
@@ -256,7 +256,7 @@ def downsampler(steps, end, tIm):
     stack = []
     for i in range(steps):
         res = end-i*(end/steps)
-        downsampled = transform.resize(tIm, (tIm.shape[0] // res, tIm.shape[1] // res), anti_aliasing=True)
+        downsampled = ndimage.zoom(tIm, 1/res)
         stack.append(downsampled)
     stack.append(tIm)
     
