@@ -253,7 +253,7 @@ def intensity_based_registration_affine_mi(s1, s2):
 
         
 def downsampler(steps, inc, tIm):
-
+    steps = steps -1 
     stack = []
     stack.append(tIm)
 
@@ -267,12 +267,12 @@ def downsampler(steps, inc, tIm):
     stack = stack[::-1]
     return stack
 
-def intensity_based_registration_affine_th(I, Im):
+def intensity_based_registration_affine_th(I, Im, iter):
     x = np.array([0., 1. ,1. ,0.,0.,0.,0.])
     fun = lambda x: reg.affine_corr(I, Im, x, return_transform=False)
 
     mu = 0.001
-    num_iter = 200
+    num_iter = iter
 
     iterations = np.arange(1, num_iter+1)
     similarity = np.full((num_iter, 1), np.nan)
@@ -329,7 +329,7 @@ def intensity_based_registration_affine_th(I, Im):
 
         display(fig)
     
-    key = uuid.uuid4().hex[:4]  # 8-character random key
-    fig.savefig(f'output/result_{key}.png')
+    #key = uuid.uuid4().hex[:4]  # 8-character random key
+    #fig.savefig(f'output/result_{key}.png')
     plt.close(fig)
     return thbest, learning_curve
